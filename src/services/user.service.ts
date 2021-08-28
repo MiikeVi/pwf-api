@@ -44,7 +44,7 @@ export class UserService {
   async create(userDto: User): Promise<User> {
     const createdUser = new this.userModel(userDto);
     if (!createdUser)
-      throw new ConflictException(HttpStatus.CONFLICT, 'Cannot save log');
+      throw new ConflictException(HttpStatus.CONFLICT, 'Cannot save user');
 
     return createdUser.save();
   }
