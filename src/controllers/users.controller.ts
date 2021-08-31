@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  ConflictException,
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
+import { isValidObjectId } from 'mongoose';
 import { User } from 'src/schemas/user.schema';
 import { UserService } from '../services/user.service';
 
@@ -14,6 +24,16 @@ export class UserController {
     const count: boolean = query.count || false;
 
     return this.userService.findAll(dbQuery, page, limit, count);
+  }
+
+  @Get(':id')
+  getUserById(@Param() params: any) {
+    if (!isValidObjectId(params.id)) {
+      throw new ConflictException(HttpStatus.CONFLICT, 'Id not valid');
+    }
+    const dbQuery: any = { _id: params.id };
+
+    return this.userService.find(dbQuery);
   }
 
   @Post()

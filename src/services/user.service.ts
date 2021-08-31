@@ -41,6 +41,19 @@ export class UserService {
     return { values: usersData, count: countDocs };
   }
 
+  async find(id: string): Promise<User> {
+    const user = await this.userModel.findById(id).exec();
+
+    if (!user) {
+      throw new NotFoundException(
+        HttpStatus.NOT_FOUND,
+        'There is no user with that id',
+      );
+    }
+
+    return user;
+  }
+
   async create(userDto: User): Promise<User> {
     const createdUser = new this.userModel(userDto);
     if (!createdUser)
