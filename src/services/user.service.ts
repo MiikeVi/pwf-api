@@ -7,7 +7,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from 'src/schemas/user.schema';
-import { Users } from '../types';
+import { Entity } from '../types';
 
 @Injectable()
 export class UserService {
@@ -18,7 +18,7 @@ export class UserService {
     page: number,
     limit: number,
     count: boolean,
-  ): Promise<Users> {
+  ): Promise<Entity<User>> {
     const usersData: User[] = await this.userModel
       .find(query)
       .sort({ createdAt: -1 })
@@ -43,6 +43,19 @@ export class UserService {
 
   async find(id: string): Promise<User> {
     const user = await this.userModel.findById(id).exec();
+
+    if (!user) {
+      throw new NotFoundException(
+        HttpStatus.NOT_FOUND,
+        'There is no user with that id',
+      );
+    }
+
+    return user;
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.userModel.findOne({ email }).exec();
 
     if (!user) {
       throw new NotFoundException(

@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Address } from 'cluster';
 import { Document } from 'mongoose';
 import { CareTakerData, Pet } from 'src/types';
 
@@ -8,10 +7,13 @@ export type UserDocument = User & Document;
 @Schema()
 export class User {
   @Prop()
-  address: Address;
+  address: string;
 
   @Prop()
-  avatar: string;
+  address2?: string;
+
+  @Prop()
+  avatar?: string;
 
   @Prop()
   birthdate: Date;
@@ -20,13 +22,16 @@ export class User {
   careTakerEnabled: boolean;
 
   @Prop()
-  careTakerData?: CareTakerData;
+  careTakerData?: string;
 
   @Prop()
   email: string;
 
   @Prop()
-  phoneNumbers: string[];
+  phoneNumber: string;
+
+  @Prop()
+  phoneNumber2: string;
 
   @Prop()
   isActive: boolean;
@@ -35,7 +40,7 @@ export class User {
   name: string;
 
   @Prop()
-  pet: Pet[];
+  pet?: Pet[];
 
   @Prop()
   password: string;

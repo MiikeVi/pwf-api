@@ -7,12 +7,17 @@ import {
   Param,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { isValidObjectId } from 'mongoose';
 import { User } from 'src/schemas/user.schema';
 import { UserService } from '../services/user.service';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+import * as bcrypt from 'bcrypt';
 
 @Controller('/user')
+@UseGuards(JwtAuthGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -37,7 +42,16 @@ export class UserController {
   }
 
   @Post()
-  postUser(@Body() userData: User): Promise<User> {
-    return this.userService.create(userData);
+  async postUser(@Body() userData: User): Promise<User> {
+    const clonedUser: User = JSON.parse(JSON.stringify(userData));
+    const saltRounds = 10;
+
+    return bcrypt
+      .hash(userData.password, saltRounds)
+      .then((hash: string) => {
+        clonedUser.password = hash;
+        return this.userService.create(clonedUser);
+      })
+      .catch((err) => err);
   }
 }
