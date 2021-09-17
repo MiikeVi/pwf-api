@@ -28,6 +28,10 @@ export class UserController {
     const limit: number = parseInt(query.limit) || 10;
     const count: boolean = query.count || false;
 
+    if (query.careTakerEnabled === 'true') {
+      dbQuery.careTakerEnabled = query.careTakerEnabled;
+    }
+
     return this.userService.findAll(dbQuery, page, limit, count);
   }
 
