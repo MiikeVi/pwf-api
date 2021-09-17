@@ -32,7 +32,7 @@ export class User {
   phoneNumber: string;
 
   @Prop()
-  phoneNumber2: string;
+  phoneNumber2?: string;
 
   @Prop()
   isActive: boolean;
