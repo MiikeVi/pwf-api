@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { CareTakerData, Pet } from 'src/types';
+import { CareTakerData, Pet, Address } from 'src/types';
 
 export type UserDocument = User & Document;
 
@@ -10,7 +10,7 @@ export class User {
   address: string;
 
   @Prop()
-  address2?: string;
+  address2?: Address;
 
   @Prop()
   avatar?: string;
@@ -22,7 +22,7 @@ export class User {
   careTakerEnabled: boolean;
 
   @Prop()
-  careTakerData?: string;
+  careTakerData?: CareTakerData;
 
   @Prop()
   email: string;
@@ -31,7 +31,7 @@ export class User {
   phoneNumber: string;
 
   @Prop()
-  phoneNumber2: string;
+  phoneNumber2?: string;
 
   @Prop()
   isActive: boolean;
