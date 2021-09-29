@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { Pet, SocialPostType } from 'src/types';
+import { Document, ObjectId } from 'mongoose';
+import * as mongoose from 'mongoose';
+import { SocialPostType } from 'src/types';
 
 export type SocialPostDocument = SocialPost & Document;
 
@@ -21,8 +22,8 @@ export class SocialPost {
   @Prop()
   location: string;
 
-  @Prop()
-  pet?: Pet;
+  @Prop({ types: mongoose.Types.ObjectId })
+  pet?: ObjectId;
 
   @Prop()
   cashReward?: number;
