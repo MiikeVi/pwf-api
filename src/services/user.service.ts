@@ -5,9 +5,10 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { User, UserDocument } from 'src/schemas/user.schema';
-import { Entity } from '../types';
+import { Entity, JSONPatch } from '../types';
+import { applyPatch, createPatch } from 'rfc6902';
 
 @Injectable()
 export class UserService {
@@ -56,7 +57,6 @@ export class UserService {
 
   async findByEmail(email: string): Promise<User> {
     const user = await this.userModel.findOne({ email }).exec();
-
     if (!user) {
       throw new NotFoundException(
         HttpStatus.NOT_FOUND,
@@ -73,5 +73,27 @@ export class UserService {
       throw new ConflictException(HttpStatus.CONFLICT, 'Cannot save user');
 
     return createdUser.save();
+  }
+
+  async update(patch: JSONPatch, userId: ObjectId) {
+    const userToUpdate = await this.userModel.findById(userId).exec();
+
+    if (!userToUpdate) {
+      throw new NotFoundException(
+        HttpStatus.NOT_FOUND,
+        'There is no user with that id',
+      );
+    }
+
+    const userDtoUpdated = applyPatch(userToUpdate, patch as any);
+
+    if (userDtoUpdated.filter((element) => !!element).length) {
+      throw new Error(
+        `Cannot patch: ${userDtoUpdated
+          .map((error) => `${error.name}: ${error.message}`)
+          .join(',')}`,
+      );
+    }
+    return userToUpdate.save();
   }
 }
