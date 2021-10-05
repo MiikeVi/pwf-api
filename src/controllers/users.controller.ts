@@ -5,6 +5,7 @@ import {
   Get,
   HttpStatus,
   Param,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -15,6 +16,7 @@ import { UserService } from '../services/user.service';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 import * as bcrypt from 'bcrypt';
+import { JSONPatch } from 'src/types';
 
 @Controller('/user')
 @UseGuards(JwtAuthGuard)
@@ -57,5 +59,18 @@ export class UserController {
         return this.userService.create(clonedUser);
       })
       .catch((err) => err);
+  }
+
+  @Patch(':id')
+  patchUser(
+    @Body() userDataPatch: JSONPatch,
+    @Param() params: any,
+  ): Promise<User> {
+    if (!isValidObjectId(params.id)) {
+      throw new ConflictException(HttpStatus.CONFLICT, 'Id not valid');
+    }
+
+    const dbQuery: any = { _id: params.id };
+    return this.userService.update(userDataPatch, dbQuery);
   }
 }
