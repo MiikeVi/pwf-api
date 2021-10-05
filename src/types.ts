@@ -15,5 +15,18 @@ export interface Address {
 export interface CareTakerData {
   reputation?: number;
   bio: string;
-  reviews: mongoose.ObjectId[]; //array of ids
+  reviews?: mongoose.ObjectId[]; //array of ids
+  price: number;
 }
+
+export type JSONPatchOperation = {
+  op: 'add' | 'remove' | 'replace';
+  path: string;
+  value?: any;
+};
+
+export type JSONPatch = Array<JSONPatchOperation>;
+
+export type PatchBody = {
+  jsonPatchBody: JSONPatch;
+};
