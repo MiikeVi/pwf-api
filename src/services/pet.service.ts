@@ -5,9 +5,10 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
+import { applyPatch } from 'rfc6902';
 import { Pet, PetDocument } from 'src/schemas/pet.schema';
-import { Entity } from '../types';
+import { Entity, JSONPatch } from '../types';
 
 @Injectable()
 export class PetService {
@@ -54,7 +55,7 @@ export class PetService {
     return pet;
   }
 
-  async delete(id: Pet): Promise<Pet> {
+  async delete(id: ObjectId): Promise<Pet> {
     const pet = await this.petModel.findOneAndRemove({ _id: id }).exec();
 
     if (!pet) {
@@ -69,5 +70,27 @@ export class PetService {
       throw new ConflictException(HttpStatus.CONFLICT, 'Cannot save pet');
 
     return createdPet.save();
+  }
+
+  async update(patch: JSONPatch, petId: ObjectId) {
+    const petToUpdate = await this.petModel.findById(petId).exec();
+
+    if (!petToUpdate) {
+      throw new NotFoundException(
+        HttpStatus.NOT_FOUND,
+        'There is no pet with that id',
+      );
+    }
+
+    const petDtoUpdated = applyPatch(petToUpdate, patch as any);
+
+    if (petDtoUpdated.filter((element) => !!element).length) {
+      throw new Error(
+        `Cannot patch: ${petDtoUpdated
+          .map((error) => `${error.name}: ${error.message}`)
+          .join(',')}`,
+      );
+    }
+    return petToUpdate.save();
   }
 }
