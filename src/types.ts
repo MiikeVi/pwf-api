@@ -5,8 +5,6 @@ export type Entity<T> = {
   count?: number;
 };
 
-export type SocialPostType = 'missing' | 'found';
-
 export interface Address {
   city: string;
   street: string;
