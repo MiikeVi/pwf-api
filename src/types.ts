@@ -17,7 +17,8 @@ export interface Address {
 export interface CareTakerData {
   reputation?: number;
   bio: string;
-  reviews: mongoose.ObjectId[]; //array of ids
+  reviews?: mongoose.ObjectId[]; //array of ids
+  price: number;
 }
 
 export type JSONPatchOperation = {
