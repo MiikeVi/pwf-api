@@ -2,16 +2,20 @@ import {
   Body,
   ConflictException,
   Controller,
+  Delete,
   Get,
   HttpStatus,
+  Param,
+  Patch,
   Post,
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { isValidObjectId } from 'mongoose';
+import { isValidObjectId, ObjectId } from 'mongoose';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { Pet } from 'src/schemas/pet.schema';
 import { PetService } from 'src/services/pet.service';
+import { JSONPatch } from 'src/types';
 
 @Controller('/pets')
 @UseGuards(JwtAuthGuard)
@@ -32,6 +36,17 @@ export class PetController {
     return this.petService.findAll(dbQuery, page, limit, count);
   }
 
+  @Get(':id')
+  getPetById(@Param() params: any) {
+    if (!isValidObjectId(params.id)) {
+      throw new ConflictException(HttpStatus.CONFLICT, 'Id not valid');
+    }
+
+    const dbQuery: any = { _id: params.id };
+
+    return this.petService.find(dbQuery);
+  }
+
   @Post()
   async postPet(@Body() petData: Pet): Promise<Pet> {
     if (!petData.name) {
@@ -40,5 +55,26 @@ export class PetController {
       const clonedPet: Pet = JSON.parse(JSON.stringify(petData));
       return this.petService.create(clonedPet);
     }
+  }
+
+  @Patch(':id')
+  patchPet(
+    @Body() petDataPatch: JSONPatch,
+    @Param() params: any,
+  ): Promise<Pet> {
+    if (!isValidObjectId(params.id)) {
+      throw new ConflictException(HttpStatus.CONFLICT, 'Id not valid');
+    }
+
+    const dbQuery: any = { _id: params.id };
+    return this.petService.update(petDataPatch, dbQuery);
+  }
+
+  @Delete(':id')
+  removePet(@Param('id') id: ObjectId): Promise<Pet> {
+    if (!isValidObjectId(id)) {
+      throw new ConflictException(HttpStatus.CONFLICT, 'Id not valid');
+    }
+    return this.petService.delete(id);
   }
 }

@@ -45,7 +45,7 @@ export class Pet {
   @Prop()
   medication: boolean;
   @Prop({ type: mongoose.Schema.Types.Mixed })
-  behaviors: Behaviors;
+  behaviors?: Behaviors;
   @Prop({ type: mongoose.Types.ObjectId })
   owner: mongoose.ObjectId;
 }
