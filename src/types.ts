@@ -17,7 +17,18 @@ export interface CareTakerData {
   bio: string;
   reviews?: mongoose.ObjectId[]; //array of ids
   price: number;
+  walkPaths: WalkPaths;
 }
+
+interface WalkPaths {
+  location: string;
+  schedule: Schedule;
+}
+
+type Schedule = {
+  startTime: string;
+  endTime: string;
+};
 
 export type JSONPatchOperation = {
   op: 'add' | 'remove' | 'replace';
