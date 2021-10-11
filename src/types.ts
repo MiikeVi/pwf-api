@@ -41,3 +41,14 @@ export type JSONPatch = Array<JSONPatchOperation>;
 export type PatchBody = {
   jsonPatchBody: JSONPatch;
 };
+
+export enum OrderType {
+  Care = 'cuidado',
+  Walk = 'paseo',
+}
+
+export enum OrderStatus {
+  Pending = 'pendiente',
+  Finished = 'terminada',
+  Accepted = 'aceptada',
+}
