@@ -1,11 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
+import { PetAge } from 'src/types';
 
 export type PetDocument = Pet & Document;
 
 enum Breed {
-  example = 'example',
-  example2 = 'example2',
+  none = 'No aplica',
+  bulldog1 = 'Bulldog Inglés',
+  bulldog2 = 'Bulldog Francés',
+  borderCollie = 'Border Collie',
+  pug = 'Pug',
+  germanShepherd = 'Pastor Alemán',
+  yorkshireTerrier = 'Yorkshire terrier',
+  whiteSwissShepherd = 'White Swiss Shepherd ',
+  chiguagua = 'Chiguagua',
 }
 
 enum PetType {
@@ -23,7 +31,7 @@ enum Behaviors {
   tranquilo = 'tranquilo',
   conflictivo = 'conflictivo',
   inquieto = 'inquieto',
-  energetico = 'energetico',
+  energetico = 'energico',
 }
 
 @Schema()
@@ -31,7 +39,7 @@ export class Pet {
   @Prop()
   name: string;
   @Prop()
-  age: number;
+  age: PetAge;
   @Prop()
   sex: string;
   @Prop({ type: mongoose.Schema.Types.Mixed })

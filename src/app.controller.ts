@@ -1,4 +1,11 @@
-import { Controller, Header, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Header,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 
 import { LocalAuthGuard } from './guards/local.auth.guard';
@@ -20,5 +27,11 @@ export class AppController {
   )
   async login(@Request() req: any): Promise<{ access_token: string }> {
     return this.authService.login(req.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
   }
 }

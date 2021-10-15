@@ -18,6 +18,7 @@ export interface CareTakerData {
   reviews?: mongoose.ObjectId[]; //array of ids
   price: number;
   walkPaths: WalkPaths;
+  type: CareTakerType;
 }
 
 interface WalkPaths {
@@ -47,8 +48,23 @@ export enum OrderType {
   Walk = 'paseo',
 }
 
+export enum CareTakerType {
+  petCare = 'cuidador',
+  petWalker = 'paseador',
+}
+
 export enum OrderStatus {
   Pending = 'pendiente',
   Finished = 'terminada',
   Accepted = 'aceptada',
+}
+
+export enum PetAge {
+  '1 mes a 3 meses',
+  '4 meses a 8 meses',
+  '9 meses a 1 año',
+  '1 año a 3 años',
+  '4 años a 8 años',
+  '8 años a 12 años',
+  'más de 12 años',
 }
