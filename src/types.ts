@@ -17,7 +17,7 @@ export interface CareTakerData {
   bio: string;
   reviews?: mongoose.ObjectId[]; //array of ids
   price: number;
-  walkPaths: WalkPaths;
+  walkPaths: WalkPaths[];
   type: CareTakerType;
 }
 
