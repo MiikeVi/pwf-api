@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
-import { User, UserDocument } from 'src/schemas/user.schema';
+import { User, UserDocument } from '../schemas/user.schema';
 import { Entity, JSONPatch } from '../types';
-import { applyPatch, createPatch } from 'rfc6902';
+import { applyPatch } from 'rfc6902';
 
 @Injectable()
 export class UserService {
