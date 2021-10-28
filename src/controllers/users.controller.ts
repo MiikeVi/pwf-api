@@ -8,6 +8,8 @@ import {
   Patch,
   Post,
   Query,
+  Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { isValidObjectId } from 'mongoose';
@@ -17,6 +19,10 @@ import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 import * as bcrypt from 'bcrypt';
 import { JSONPatch } from 'src/types';
+import { Observable, of } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
+import { join } from 'path';
+import * as fs from 'fs';
 
 @Controller('/user')
 @UseGuards(JwtAuthGuard)
@@ -72,5 +78,28 @@ export class UserController {
 
     const dbQuery: any = { _id: params.id };
     return this.userService.update(userDataPatch, dbQuery);
+  }
+
+  @Post('upload')
+  uploadImage(@Req() request): Observable<Record<string, unknown>> {
+    const imagename = new Date().getTime().toString() + uuidv4() + '.jpeg';
+    const buff = Buffer.from(JSON.stringify(request.body.base64), 'base64');
+    fs.writeFileSync(
+      join(process.cwd(), 'uploads/profile-images/' + imagename),
+      buff,
+    );
+    return of({ imagePath: imagename });
+  }
+
+  @Get('profile-image/:imagename')
+  getProfileImage(
+    @Param('imagename') imagename,
+    @Res() response,
+  ): Observable<Record<string, unknown>> {
+    return of(
+      response.sendFile(
+        join(process.cwd(), 'uploads/profile-images/' + imagename),
+      ),
+    );
   }
 }
