@@ -24,11 +24,13 @@ export interface CareTakerData {
 interface WalkPaths {
   location: string;
   schedule: Schedule;
+  price: number;
+  shared: boolean;
 }
 
 type Schedule = {
-  startTime: string;
-  endTime: string;
+  startTime: Date;
+  endTime: Date;
 };
 
 export type JSONPatchOperation = {
@@ -51,6 +53,7 @@ export enum OrderType {
 export enum CareTakerType {
   petCare = 'cuidador',
   petWalker = 'paseador',
+  both = 'Ambos',
 }
 
 export enum OrderStatus {
