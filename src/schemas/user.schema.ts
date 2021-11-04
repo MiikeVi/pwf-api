@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { CareTakerData, Address } from 'src/types';
+import { CareTakerData, Address, PetCareData } from 'src/types';
 
 export type UserDocument = User & Document;
 
@@ -24,6 +24,9 @@ export class User {
 
   @Prop({ type: mongoose.Schema.Types.Mixed })
   careTakerData?: CareTakerData;
+
+  @Prop({ type: mongoose.Schema.Types.Mixed })
+  petCareData?: PetCareData;
 
   @Prop()
   email: string;

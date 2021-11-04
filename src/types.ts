@@ -12,13 +12,34 @@ export interface Address {
   postalCode: string;
 }
 
-export interface CareTakerData {
-  reputation?: number;
+export interface PetCareData {
+  reputation?: number[];
   bio: string;
-  reviews?: mongoose.ObjectId[]; //array of ids
-  price: number;
-  walkPaths: WalkPaths[];
+  walkerData: WalkerData;
+  careTakerData: CareTakerData;
   type: CareTakerType;
+}
+
+export interface CareTakerData {
+  home: HomeType;
+  availability: string;
+  days: Day[];
+  dogsType: string[];
+}
+
+export interface WalkerData {
+  reviews?: string[];
+  walkPaths: WalkPaths[];
+}
+
+export enum Day {
+  monday = 'Lunes',
+  tuesday = 'Martes',
+  wednesday = 'Miercoles',
+  thursday = 'Jueves',
+  friday = 'Viernes',
+  saturday = 'Sábado',
+  sunday = 'Domingo',
 }
 
 interface WalkPaths {
@@ -26,6 +47,11 @@ interface WalkPaths {
   schedule: Schedule;
   price: number;
   shared: boolean;
+}
+
+export enum HomeType {
+  House = 'casa',
+  apartment = 'Departamento',
 }
 
 type Schedule = {

@@ -33,6 +33,9 @@ export class Order {
 
   @Prop()
   orderType: OrderType;
+
+  @Prop()
+  shared: boolean;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
