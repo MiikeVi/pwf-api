@@ -23,9 +23,6 @@ export class User {
   careTakerEnabled: boolean;
 
   @Prop({ type: mongoose.Schema.Types.Mixed })
-  careTakerData?: CareTakerData;
-
-  @Prop({ type: mongoose.Schema.Types.Mixed })
   petCareData?: PetCareData;
 
   @Prop()
@@ -51,6 +48,9 @@ export class User {
 
   @Prop()
   permissions: string[];
+
+  @Prop()
+  stars: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
