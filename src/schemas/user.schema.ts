@@ -14,6 +14,12 @@ export class User {
   address2?: Address;
 
   @Prop()
+  region: string;
+
+  @Prop()
+  city: string;
+
+  @Prop()
   avatar?: string;
 
   @Prop()
