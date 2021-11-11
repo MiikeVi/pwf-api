@@ -38,22 +38,31 @@ enum Behaviors {
 export class Pet {
   @Prop()
   name: string;
+
   @Prop()
   age: PetAge;
+
   @Prop()
   sex: string;
+
   @Prop({ type: mongoose.Schema.Types.Mixed })
   breed: Breed;
+
   @Prop()
   photo?: string;
+
   @Prop()
   weight: number;
+
   @Prop({ type: mongoose.Schema.Types.Mixed })
   type: PetType;
+
   @Prop()
   medication: boolean;
+
   @Prop({ type: mongoose.Schema.Types.Mixed })
   behaviors?: Behaviors;
+
   @Prop({ type: mongoose.Types.ObjectId })
   owner: mongoose.ObjectId;
 }

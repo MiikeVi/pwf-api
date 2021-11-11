@@ -18,6 +18,12 @@ export interface PetCareData {
   walkerData: WalkerData;
   careTakerData: CareTakerData;
   type: CareTakerType;
+  position: Geolocation;
+}
+
+export interface Geolocation {
+  lat: number;
+  lon: number;
 }
 
 export interface CareTakerData {
@@ -29,7 +35,7 @@ export interface CareTakerData {
 
 export interface WalkerData {
   reviews?: string[];
-  walkPaths: WalkPaths[];
+  walkPaths: WalkPath[];
 }
 
 export enum Day {
@@ -42,7 +48,7 @@ export enum Day {
   sunday = 'Domingo',
 }
 
-interface WalkPaths {
+export interface WalkPath {
   location: string;
   schedule: Schedule;
   price: number;
