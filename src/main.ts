@@ -4,7 +4,10 @@ import { AppModule } from './app.module';
 import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const cors = require('cors');
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.use(cors());
   app.enableCors();
   app.setGlobalPrefix('api');
   app.use(bodyParser.json({ limit: '50mb' }));
