@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { OrderStatus, OrderType } from 'src/types';
+import { OrderStatus, OrderType, WalkPath } from 'src/types';
 
 export type OrderDocument = Order & Document;
 
@@ -19,6 +19,9 @@ export class Order {
   @Prop()
   endDateService?: Date;
 
+  @Prop()
+  dayService?: Date;
+
   @Prop({ type: mongoose.Types.ObjectId })
   userId: mongoose.ObjectId;
 
@@ -33,6 +36,15 @@ export class Order {
 
   @Prop()
   orderType: OrderType;
+
+  @Prop()
+  shared: boolean;
+
+  @Prop()
+  walkPath: WalkPath;
+
+  @Prop()
+  description: string;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

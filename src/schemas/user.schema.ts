@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { CareTakerData, Address } from 'src/types';
+import { CareTakerData, Address, PetCareData } from 'src/types';
 
 export type UserDocument = User & Document;
 
@@ -14,6 +14,12 @@ export class User {
   address2?: Address;
 
   @Prop()
+  region: string;
+
+  @Prop()
+  city: string;
+
+  @Prop()
   avatar?: string;
 
   @Prop()
@@ -23,7 +29,7 @@ export class User {
   careTakerEnabled: boolean;
 
   @Prop({ type: mongoose.Schema.Types.Mixed })
-  careTakerData?: CareTakerData;
+  petCareData?: PetCareData;
 
   @Prop()
   email: string;
@@ -48,6 +54,9 @@ export class User {
 
   @Prop()
   permissions: string[];
+
+  @Prop()
+  stars: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
