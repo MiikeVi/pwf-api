@@ -22,8 +22,8 @@ export interface PetCareData {
 }
 
 export interface Geolocation {
-  lat: string;
-  lon: string;
+  lat: number;
+  lon: number;
 }
 
 export interface CareTakerData {
