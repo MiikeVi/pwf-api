@@ -39,7 +39,7 @@ export class Pet {
   @Prop()
   name: string;
 
-  @Prop()
+  @Prop({ type: String })
   age: PetAge;
 
   @Prop()
