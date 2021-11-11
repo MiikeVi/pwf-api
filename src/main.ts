@@ -5,9 +5,19 @@ import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const cors = require('cors');
+  var cors = require('cors');
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.use(cors());
+
+  app.use(
+    cors({
+      allowedHeaders: ['sessionId', 'Content-Type'],
+      exposedHeaders: ['sessionId'],
+      origin: '*',
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      preflightContinue: false,
+    }),
+  );
+
   app.enableCors();
   app.setGlobalPrefix('api');
   app.use(bodyParser.json({ limit: '50mb' }));
