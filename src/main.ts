@@ -8,7 +8,7 @@ async function bootstrap() {
   const cors = require('cors');
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.use(
+  app.use( 
     cors({
       allowedHeaders: ['sessionId', 'Content-Type'],
       exposedHeaders: ['sessionId'],
@@ -18,7 +18,10 @@ async function bootstrap() {
     }),
   );
 
-  app.enableCors();
+  app.enableCors({
+    allowedHeaders: '*',
+    origin: '*',
+  });
 
   app.setGlobalPrefix('api');
   app.use((req, res, next) => {
