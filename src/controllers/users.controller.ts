@@ -19,7 +19,7 @@ import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 import * as bcrypt from 'bcrypt';
 import { JSONPatch } from 'src/types';
-import { Observable, of } from 'rxjs';
+import { filter, Observable, of } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 import { join } from 'path';
 import * as fs from 'fs';
@@ -38,6 +38,10 @@ export class UserController {
 
     if (query.careTakerEnabled === 'true') {
       dbQuery.careTakerEnabled = query.careTakerEnabled;
+    }
+
+    if (query.city) {
+      dbQuery.city = query.city;
     }
 
     return this.userService.findAll(dbQuery, page, limit, count);
