@@ -86,6 +86,7 @@ export enum OrderStatus {
   Pending = 'pendiente',
   Finished = 'terminada',
   Accepted = 'aceptada',
+  Cancelled = 'cancelada',
 }
 
 export enum PetAge {
