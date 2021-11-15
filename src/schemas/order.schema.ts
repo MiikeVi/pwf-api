@@ -28,19 +28,19 @@ export class Order {
   @Prop({ type: mongoose.Types.ObjectId })
   careTakerId: mongoose.ObjectId;
 
-  @Prop()
+  @Prop({ type: String })
   orderStatus: OrderStatus;
 
   @Prop({ type: mongoose.Types.ObjectId })
   pet: mongoose.ObjectId;
 
-  @Prop()
+  @Prop({ type: String })
   orderType: OrderType;
 
   @Prop()
   shared: boolean;
 
-  @Prop()
+  @Prop({ type: mongoose.Schema.Types.Mixed })
   walkPath: WalkPath;
 
   @Prop()

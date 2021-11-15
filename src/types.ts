@@ -48,12 +48,12 @@ export enum Day {
   sunday = 'Domingo',
 }
 
-export interface WalkPath {
+export type WalkPath = {
   location: string;
   schedule: Schedule;
   price: number;
   shared: boolean;
-}
+};
 
 export enum HomeType {
   House = 'casa',

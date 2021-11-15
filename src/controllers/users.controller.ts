@@ -25,10 +25,10 @@ import { join } from 'path';
 import * as fs from 'fs';
 
 @Controller('/user')
-@UseGuards(JwtAuthGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   getUsers(@Query() query: any) {
     const dbQuery: any = {};
@@ -47,6 +47,7 @@ export class UserController {
     return this.userService.findAll(dbQuery, page, limit, count);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   getUserById(@Param() params: any) {
     if (!isValidObjectId(params.id)) {
@@ -71,6 +72,7 @@ export class UserController {
       .catch((err) => err);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   patchUser(
     @Body() userDataPatch: JSONPatch,
@@ -84,6 +86,7 @@ export class UserController {
     return this.userService.update(userDataPatch, dbQuery);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('upload')
   uploadImage(@Req() request): Observable<Record<string, unknown>> {
     const imagename = new Date().getTime().toString() + uuidv4() + '.jpeg';
@@ -95,6 +98,7 @@ export class UserController {
     return of({ imagePath: imagename });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('profile-image/:imagename')
   getProfileImage(
     @Param('imagename') imagename,
