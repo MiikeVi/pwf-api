@@ -33,6 +33,10 @@ export class OrderController {
       dbQuery.userId = query.userId;
     }
 
+    if (query.careTakerId && isValidObjectId(query.userId)) {
+      dbQuery.careTakerId = query.careTakerId;
+    }
+
     return this.orderService.findAll(dbQuery, page, limit, count);
   }
 
