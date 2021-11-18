@@ -65,6 +65,9 @@ export class Pet {
 
   @Prop({ type: mongoose.Types.ObjectId })
   owner: mongoose.ObjectId;
+
+  @Prop()
+  isActive: boolean;
 }
 
 export const PetSchema = SchemaFactory.createForClass(Pet);

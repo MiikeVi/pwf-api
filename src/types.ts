@@ -55,7 +55,7 @@ export type WalkPath = {
   shared: boolean;
   available: boolean;
   maxPets: number;
-  pets: Pet[];
+  pets: string[];
 };
 
 export enum HomeType {
