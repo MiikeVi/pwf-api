@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
+import { Pet } from './schemas/pet.schema';
 
 export type Entity<T> = {
   values: T[];
@@ -53,6 +53,9 @@ export type WalkPath = {
   schedule: Schedule;
   price: number;
   shared: boolean;
+  available: boolean;
+  maxPets: number;
+  pets: Pet[];
 };
 
 export enum HomeType {
