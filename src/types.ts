@@ -68,6 +68,12 @@ type Schedule = {
   endTime: Date;
 };
 
+export type DayEnable = {
+  day: Date;
+  selected: boolean;
+  ordered: boolean;
+};
+
 export type JSONPatchOperation = {
   op: 'add' | 'remove' | 'replace';
   path: string;
