@@ -1,5 +1,3 @@
-import { Pet } from './schemas/pet.schema';
-
 export type Entity<T> = {
   values: T[];
   count?: number;
@@ -52,6 +50,7 @@ export type WalkPath = {
   location: string;
   schedule: Schedule;
   price: number;
+  sharedPrice?: number;
   shared: boolean;
   available: boolean;
   maxPets: number;
