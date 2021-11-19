@@ -19,7 +19,7 @@ export class Order {
   @Prop()
   endDateService?: Date;
 
-  @Prop()
+  @Prop({ type: mongoose.Schema.Types.Mixed })
   dayService?: DayEnable;
 
   @Prop({ type: mongoose.Types.ObjectId })
