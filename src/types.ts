@@ -29,6 +29,7 @@ export interface CareTakerData {
   availability: string;
   days: Day[];
   dogsType: string[];
+  daysEnabled: DayEnable[];
 }
 
 export interface WalkerData {
